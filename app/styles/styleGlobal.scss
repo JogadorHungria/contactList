@@ -1,0 +1,21 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+body {
+  background-image: linear-gradient(to bottom, #00d9fffd, #002fff);
+}
+
+a,
+button {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+a:hover,
+button:hover {
+  opacity: 1;
+}
