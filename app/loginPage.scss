@@ -1,10 +1,7 @@
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  background-image: linear-gradient(to bottom, #00d9fffd, #002fff);
 }
+
 main {
   display: flex;
   align-items: center;
@@ -44,7 +41,7 @@ button {
   font-weight: 600;
 }
 
-.register {
+.buttonAlterPage {
   margin-top: 10px;
   background-color: none;
   width: 100%;

@@ -5,6 +5,8 @@ import { TLogin, loginSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "./services/api";
 import { Input } from "./components/input";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const {
@@ -24,8 +26,12 @@ const Page = () => {
       localStorage.setItem("@contactList:token", token);
 
       location.href = "/dashboard";
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast(err.response?.data.message);
+      } else {
+        console.log("Erro desconhecido:", err);
+      }
     }
   };
 
@@ -35,10 +41,20 @@ const Page = () => {
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit(LoginRequisition)}>
-          <Input name="Email" register={register} type="text" />
+          <Input
+            labelName="Email"
+            name="email"
+            register={register}
+            type="text"
+          />
           <span>{errors.email?.message && <p>{errors.email?.message}</p>}</span>
 
-          <Input name="password" register={register} type="password" />
+          <Input
+            labelName="Password"
+            name="password"
+            register={register}
+            type="password"
+          />
           <span>
             {errors.password?.message && <p>{errors.password?.message}</p>}
           </span>
@@ -47,7 +63,7 @@ const Page = () => {
 
         <button
           type="button"
-          className="register"
+          className="buttonAlterPage"
           onClick={() => (location.href = "/register")}
         >
           Registrar
