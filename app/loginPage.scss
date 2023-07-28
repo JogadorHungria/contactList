@@ -36,10 +36,16 @@ span {
 }
 
 span p {
-  color: red;
+  color: rgb(255, 192, 192);
   font-weight: 600;
 }
 
 button {
   font-weight: 600;
+}
+
+.register {
+  margin-top: 10px;
+  background-color: none;
+  width: 100%;
 }

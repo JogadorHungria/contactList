@@ -1,14 +1,12 @@
-import { type } from "os";
+type IType = "text" | "password" | "email";
 
-type IType = "text" | "password";
-
-interface Input {
+interface IInput {
   name: string;
   register: any;
   type: IType;
 }
 
-export const Input = ({ name, register, type }: any) => {
+export const Input = ({ name, register, type }: IInput) => {
   return (
     <>
       <label htmlFor={name.toLowerCase()}>{name}</label>

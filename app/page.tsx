@@ -20,11 +20,12 @@ const Page = () => {
       const response = await api.post<any>("/users/login", data);
 
       const { token } = response.data;
-      console.log(token);
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       localStorage.setItem("@contactList:token", token);
+
+      location.href = "/dashboard";
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -43,6 +44,14 @@ const Page = () => {
           </span>
           <button type="submit">Entrar</button>
         </form>
+
+        <button
+          type="button"
+          className="register"
+          onClick={() => (location.href = "/register")}
+        >
+          Registrar
+        </button>
       </div>
     </main>
   );

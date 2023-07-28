@@ -5,7 +5,7 @@ export const loginSchema = z.object({
     message: "Deve conter no minimo 4 caracteres",
   }),
 
-  email: z.string().email("Deve ser um e-mail"),
+  email: z.string().email("Deve ser um E-mail valido"),
 });
 
 export type TLogin = z.infer<typeof loginSchema>;
