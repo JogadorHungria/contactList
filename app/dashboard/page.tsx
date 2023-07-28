@@ -21,6 +21,7 @@ const DashBoard = () => {
 
         setUser(response.data);
       } catch (err) {
+        location.replace("/");
         if (axios.isAxiosError(err)) {
           toast(err.response?.data.message);
         } else {

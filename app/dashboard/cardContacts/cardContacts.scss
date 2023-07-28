@@ -1,7 +1,7 @@
 .cardContacts {
   width: 180px;
   height: 200px;
-  background-color: red;
+  background-color: rgb(237, 239, 245);
 
   display: flex;
   flex-direction: column;
@@ -9,4 +9,11 @@
   justify-content: space-around;
 
   border-radius: 5px;
+
+  button {
+    color: rgb(14, 13, 13);
+  }
+  button:hover {
+    border-bottom: 1px solid black;
+  }
 }

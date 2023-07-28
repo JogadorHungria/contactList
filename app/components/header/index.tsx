@@ -1,17 +1,21 @@
 import "@/app/components/header/headerStyle.scss";
 import { Button } from "../button";
+import { toast } from "react-toastify";
 
-const teste = () => {
-  console.log("teste");
+const newContactRequisition = () => {
+  toast("Novo contato criado");
+};
+
+const listContactRequisition = () => {
+  toast("Listando contatos");
 };
 
 export const Header = () => {
   return (
     <header>
       <ul>
-        <Button onclick={teste} value="Novo contato" />
-        <Button onclick={teste} value="Listar contatos" />
-        <Button onclick={teste} value="Excluir Contato" />
+        <Button onclick={newContactRequisition} value="Novo contato" />
+        <Button onclick={listContactRequisition} value="Listar contatos" />
       </ul>
     </header>
   );
