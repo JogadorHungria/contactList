@@ -12,7 +12,7 @@ export const Header = () => {
   const { userDesloger, setShowModal } = useContext(GlobalContext);
 
   const newContactRequisition = () => {
-    setShowModal(() => true);
+    setShowModal(() => "creation");
   };
 
   return (
@@ -21,9 +21,7 @@ export const Header = () => {
         <li>
           <Button onclick={newContactRequisition} value="Novo contato" />
         </li>
-        <li>
-          <Button onclick={listContactRequisition} value="Listar contatos" />
-        </li>
+
         <li>
           <Button onclick={userDesloger} value="Deslogar" />
         </li>

@@ -1,20 +1,17 @@
 import { z } from "zod";
+import { contactSchema } from "./contactCchema";
+import { type } from "os";
 
-export const contactSchema = z.object({
+export const userSchema = z.object({
   id: z.number(),
   completName: z.string().nonempty(),
   contactPhone: z
     .string()
     .min(11, { message: "Digite um telefone valido" })
     .max(11, { message: "Digite um telefone valido" }),
-  createdAt: z.string().nonempty("requirid"),
+  createdAt: z.string(),
   email: z.string().nonempty("requirid").email({ message: "Email invalido !" }),
+  contacts: contactSchema.array(),
 });
 
-export const contactCreationSchema = contactSchema.omit({
-  id: true,
-  createdAt: true,
-});
-
-export type TContact = z.infer<typeof contactSchema>;
-export type TContactCreation = z.infer<typeof contactCreationSchema>;
+export type TUser = z.infer<typeof userSchema>;

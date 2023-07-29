@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { TUser } from "../schema/userSchema";
 
 export interface iChildren {
   children: ReactNode;
@@ -6,9 +7,10 @@ export interface iChildren {
 
 export interface IContexGlobal {
   user: any;
-  setUser: Dispatch<any>;
-  showModal: boolean | null;
-  setShowModal: Dispatch<SetStateAction<boolean | null>>;
+  setUser: Dispatch<TUser | null>;
+  showModal: string | null;
+  setShowModal: Dispatch<SetStateAction<string | null>>;
   userDesloger: () => void;
   profileRequisition: () => void;
+  contactDelete: (id: number) => Promise<void>;
 }

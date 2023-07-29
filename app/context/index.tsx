@@ -5,15 +5,14 @@ import { IContexGlobal, iChildren } from "./interface";
 import { api } from "../services/api";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import { TUser } from "../schema/userSchema";
 
 export const GlobalContext = createContext({} as IContexGlobal);
 
 export const GlobalProvider = ({ children }: iChildren) => {
-  const router = useRouter();
+  const [user, setUser] = useState<TUser | null>(null);
 
-  const [user, setUser] = useState<any>(null);
-  const [showModal, setShowModal] = useState<boolean | null>(null);
+  const [showModal, setShowModal] = useState<string | null>(null);
 
   const profileRequisition = async () => {
     const token = localStorage.getItem("@contactList:token");
@@ -33,11 +32,34 @@ export const GlobalProvider = ({ children }: iChildren) => {
     }
   };
 
+  const contactDelete = async (id: number) => {
+    const token = localStorage.getItem("@contactList:token");
+
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    try {
+      await api.delete<any>(`/contacts/${id}`);
+
+      const newContactList: any = { ...user };
+      newContactList.contacts = user?.contacts.filter(
+        (contact) => contact.id != id
+      );
+
+      setUser(newContactList);
+    } catch (err) {
+      location.replace("/");
+      if (axios.isAxiosError(err)) {
+      } else {
+        console.log("Erro desconhecido:", err);
+      }
+    }
+  };
+
   const userDesloger = () => {
     localStorage.clear();
     toast("Deslogando");
     setTimeout(() => {
-      router.push("/");
+      location.replace("/");
     }, 2400);
   };
 
@@ -50,6 +72,7 @@ export const GlobalProvider = ({ children }: iChildren) => {
         setShowModal,
         userDesloger,
         profileRequisition,
+        contactDelete,
       }}
     >
       {children}
