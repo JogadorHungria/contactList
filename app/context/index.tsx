@@ -1,15 +1,17 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { IContexGlobal, iChildren } from "./interface";
 import { api } from "../services/api";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { time } from "console";
+import { useRouter } from "next/router";
 
 export const GlobalContext = createContext({} as IContexGlobal);
 
 export const GlobalProvider = ({ children }: iChildren) => {
+  const router = useRouter();
+
   const [user, setUser] = useState<any>(null);
   const [showModal, setShowModal] = useState<boolean | null>(null);
 
@@ -35,7 +37,7 @@ export const GlobalProvider = ({ children }: iChildren) => {
     localStorage.clear();
     toast("Deslogando");
     setTimeout(() => {
-      location.replace("/");
+      router.push("/");
     }, 2400);
   };
 

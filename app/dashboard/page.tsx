@@ -4,9 +4,10 @@ import { Header } from "../components/header";
 import { useContext, useEffect } from "react";
 import { CardContacts } from "./cardContacts";
 import { GlobalContext } from "../context";
+import { Modal } from "../components/modal";
 
 const DashBoard = () => {
-  const { user, profileRequisition } = useContext(GlobalContext);
+  const { user, profileRequisition, showModal } = useContext(GlobalContext);
 
   useEffect(() => {
     profileRequisition();
@@ -15,6 +16,7 @@ const DashBoard = () => {
   return (
     <>
       <Header />
+      {showModal && <Modal />}
       <main>
         <h2>Contatos</h2>
 

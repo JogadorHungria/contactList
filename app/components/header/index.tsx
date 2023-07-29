@@ -4,16 +4,16 @@ import { toast } from "react-toastify";
 import { useContext } from "react";
 import { GlobalContext } from "@/app/context";
 
-const newContactRequisition = () => {
-  toast("Novo contato criado");
-};
-
 const listContactRequisition = () => {
   toast("Listando contatos");
 };
 
 export const Header = () => {
-  const { userDesloger } = useContext(GlobalContext);
+  const { userDesloger, setShowModal } = useContext(GlobalContext);
+
+  const newContactRequisition = () => {
+    setShowModal(() => true);
+  };
 
   return (
     <header>

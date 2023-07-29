@@ -1,7 +1,7 @@
 import "app/styles/styleGlobal.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Flip, ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalProvider } from "./context";
 
