@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Flip, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GlobalProvider } from "./context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={inter.className}>
         <ToastContainer autoClose={2000} />
-        {children}
+        <GlobalProvider>{children}</GlobalProvider>
       </body>
     </html>
   );

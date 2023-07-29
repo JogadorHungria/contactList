@@ -1,38 +1,16 @@
 "use client";
 import "app/dashboard/dashboardStyle.scss";
 import { Header } from "../components/header";
-import { api } from "../services/api";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CardContacts } from "./cardContacts";
+import { GlobalContext } from "../context";
 
 const DashBoard = () => {
-  const [user, setUser] = useState<any>(null);
+  const { user, profileRequisition } = useContext(GlobalContext);
 
   useEffect(() => {
-    const profileRequisition = async () => {
-      const token = localStorage.getItem("@contactList:token");
-
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      try {
-        const response = await api.get<any>("/users/profile");
-
-        setUser(response.data);
-      } catch (err) {
-        location.replace("/");
-        if (axios.isAxiosError(err)) {
-          toast(err.response?.data.message);
-        } else {
-          console.log("Erro desconhecido:", err);
-        }
-      }
-    };
     profileRequisition();
   }, []);
-
-  console.log(user);
 
   return (
     <>

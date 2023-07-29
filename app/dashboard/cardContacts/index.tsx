@@ -1,7 +1,6 @@
 import { Button } from "@/app/components/button";
 import "@/app/dashboard/cardContacts/cardContacts.scss";
 import { TContact } from "@/app/schema/contactCchema";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 interface ICardType {
