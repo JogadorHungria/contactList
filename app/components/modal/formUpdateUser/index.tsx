@@ -26,6 +26,7 @@ export const UpdateUser = () => {
 
       const response = await api.patch("/users", newData);
 
+      setUser(response.data);
       console.log(response.data);
       toast("Perfil atualizado");
       setShowModal(null);
