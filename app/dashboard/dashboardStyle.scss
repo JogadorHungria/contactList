@@ -11,6 +11,12 @@ body {
 
 h2 {
   margin-top: 50px;
+  color: white;
+}
+
+h2 + h2 {
+  color: rgb(204, 201, 201);
+  font-size: 20px;
 }
 
 section {

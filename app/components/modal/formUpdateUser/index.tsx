@@ -1,42 +1,40 @@
-import "@/app/components/modal/formCreateContact/formCreat.scss";
+import "@/app/components/modal/formUpdateContact/formUpdate.scss";
 import { useForm } from "react-hook-form";
 import { Input } from "../../input";
 import {
-  TContact,
   TContactCreation,
-  contactCreationSchema,
+  updateContactSchema,
 } from "@/app/schema/contactCchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import { api } from "@/app/services/api";
 import axios from "axios";
 import { useContext } from "react";
 import { GlobalContext } from "@/app/context";
-import { TUser } from "@/app/schema/userSchema";
 
-export const FormCreatContact = () => {
-  const { user, setUser, setShowModal } = useContext(GlobalContext);
+export const UpdateUser = () => {
+  const { user, setUser, setShowModal, contactSelected } =
+    useContext(GlobalContext);
 
-  const creatNewContactRequisition = async (data: any) => {
+  const updateContactRequisition = async (data: any) => {
     const token = localStorage.getItem("@contactList:token");
 
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     try {
-      const response = await api.post("/contacts", data);
+      const newData = { ...user, ...data };
 
-      const newContactList: TContact[] = [...user!.contacts, response.data];
+      const response = await api.patch("/users", newData);
 
-      const newUser: TUser | null = user;
-
-      newUser!.contacts = newContactList;
-
-      setUser(newUser);
+      console.log(response.data);
+      toast("Perfil atualizado");
       setShowModal(null);
     } catch (err) {
-      location.replace("/");
       if (axios.isAxiosError(err)) {
+        toast(err.response?.data.message);
+        console.error(err.response?.data.message);
       } else {
-        console.log("Erro desconhecido:", err);
+        console.error("Erro desconhecido:", err);
       }
     }
   };
@@ -45,14 +43,15 @@ export const FormCreatContact = () => {
     register,
     handleSubmit,
     formState: { errors },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<TContactCreation>({
-    resolver: zodResolver(contactCreationSchema),
+    resolver: zodResolver(updateContactSchema),
   });
 
   return (
     <>
-      <h4>Criar</h4>
-      <form onSubmit={handleSubmit(creatNewContactRequisition)}>
+      <h4>Editar perfil</h4>
+      <form onSubmit={handleSubmit(updateContactRequisition)}>
         <Input
           labelName="Nome completo"
           name="completName"
@@ -82,6 +81,3 @@ export const FormCreatContact = () => {
     </>
   );
 };
-function setUser(data: any) {
-  throw new Error("Function not implemented.");
-}

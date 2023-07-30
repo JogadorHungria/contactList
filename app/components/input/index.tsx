@@ -1,5 +1,3 @@
-import { FieldErrors, FieldValues } from "react-hook-form";
-
 type IType = "text" | "password" | "email" | "tel";
 
 interface IInput {

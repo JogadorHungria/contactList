@@ -6,6 +6,7 @@ import { api } from "../services/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { TUser } from "../schema/userSchema";
+import { TContact } from "../schema/contactCchema";
 
 export const GlobalContext = createContext({} as IContexGlobal);
 
@@ -13,6 +14,7 @@ export const GlobalProvider = ({ children }: iChildren) => {
   const [user, setUser] = useState<TUser | null>(null);
 
   const [showModal, setShowModal] = useState<string | null>(null);
+  const [contactSelected, setContactSelected] = useState<TContact | null>(null);
 
   const profileRequisition = async () => {
     const token = localStorage.getItem("@contactList:token");
@@ -73,6 +75,8 @@ export const GlobalProvider = ({ children }: iChildren) => {
         userDesloger,
         profileRequisition,
         contactDelete,
+        contactSelected,
+        setContactSelected,
       }}
     >
       {children}

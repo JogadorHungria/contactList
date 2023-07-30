@@ -10,10 +10,12 @@ interface ICardType {
 }
 
 export const CardContacts = ({ contact }: ICardType) => {
-  const { setShowModal, contactDelete } = useContext(GlobalContext);
+  const { setShowModal, contactDelete, setContactSelected } =
+    useContext(GlobalContext);
 
   const editContactRequisition = () => {
-    setShowModal(() => "edit");
+    setShowModal(() => "update");
+    setContactSelected(contact);
   };
 
   return (

@@ -1,10 +1,9 @@
-import "@/app/components/modal/formCreateContact/formUpdate.scss";
+import "@/app/components/modal/formUpdateContact/formUpdate.scss";
 import { useForm } from "react-hook-form";
 import { Input } from "../../input";
 import {
-  TContact,
   TContactCreation,
-  contactCreationSchema,
+  updateContactSchema,
 } from "@/app/schema/contactCchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
@@ -12,31 +11,42 @@ import { api } from "@/app/services/api";
 import axios from "axios";
 import { useContext } from "react";
 import { GlobalContext } from "@/app/context";
-import { TUser } from "@/app/schema/userSchema";
 
-export const FormCreatContact = () => {
-  const { user, setUser, setShowModal } = useContext(GlobalContext);
+export const UpdateContact = () => {
+  const { user, setUser, setShowModal, contactSelected } =
+    useContext(GlobalContext);
 
-  const creatNewContactRequisition = async (data: any) => {
+  const updateContactRequisition = async (data: any) => {
     const token = localStorage.getItem("@contactList:token");
 
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     try {
-      const response = await api.post("/contacts", data);
+      const newContact = {
+        ...contactSelected,
+        ...data,
+      };
 
-      //   console.log(...user.contacts);
-      const newContactList: TContact[] = [...user.contacts, response.data];
+      const response = await api.patch(
+        `/contacts/${contactSelected?.id}`,
+        newContact
+      );
 
-      const newUser: TUser = user;
+      const newUserContactList = user!.contacts.filter((contact) => {
+        return contact.id != newContact.id;
+      });
 
-      newUser.contacts = newContactList;
+      newUserContactList.unshift(newContact);
 
-      setUser(newUser);
+      const newUserData = user;
+
+      newUserData!.contacts = newUserContactList;
+      setUser(newUserData);
+      toast("Contato atualizado");
       setShowModal(null);
     } catch (err) {
-      location.replace("/");
       if (axios.isAxiosError(err)) {
+        console.log(err.response);
       } else {
         console.log("Erro desconhecido:", err);
       }
@@ -47,40 +57,41 @@ export const FormCreatContact = () => {
     register,
     handleSubmit,
     formState: { errors },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useForm<TContactCreation>({
-    resolver: zodResolver(contactCreationSchema),
+    resolver: zodResolver(updateContactSchema),
   });
 
   return (
-    <form onSubmit={handleSubmit(creatNewContactRequisition)}>
-      <Input
-        labelName="Nome completo"
-        name="completName"
-        register={register}
-        type="text"
-        error={errors.completName?.message}
-      />
+    <>
+      <h4>Editar</h4>
+      <form onSubmit={handleSubmit(updateContactRequisition)}>
+        <Input
+          labelName="Nome completo"
+          name="completName"
+          register={register}
+          type="text"
+          error={errors.completName?.message}
+        />
 
-      <Input
-        labelName="Email"
-        name="email"
-        register={register}
-        type="text"
-        error={errors.email?.message}
-      />
+        <Input
+          labelName="Email"
+          name="email"
+          register={register}
+          type="text"
+          error={errors.email?.message}
+        />
 
-      <Input
-        labelName="Telefone para contato"
-        name="contactPhone"
-        register={register}
-        type="text"
-        error={errors.contactPhone?.message}
-      />
+        <Input
+          labelName="Telefone para contato"
+          name="contactPhone"
+          register={register}
+          type="text"
+          error={errors.contactPhone?.message}
+        />
 
-      <button type="submit">ENVIAR</button>
-    </form>
+        <button type="submit">ENVIAR</button>
+      </form>
+    </>
   );
 };
-function setUser(data: any) {
-  throw new Error("Function not implemented.");
-}

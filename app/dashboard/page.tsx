@@ -21,6 +21,7 @@ const DashBoard = () => {
 
         {showModal && <Modal />}
         <main>
+          <h2>{`User: ${user.completName}`}</h2>
           <h2>Contatos</h2>
 
           <section>
